@@ -1,1 +1,3 @@
 # minesweeper
+
+npx webpack build
