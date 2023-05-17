@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("console.log('work')\r\n\n\n//# sourceURL=webpack://minesweeper/./src/index.js?");
+eval("console.log('true work')\r\n\n\n//# sourceURL=webpack://minesweeper/./src/index.js?");
 
 /***/ })
 
