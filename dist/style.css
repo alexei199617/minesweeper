@@ -1,0 +1,36 @@
+html {
+    font-size: 50px;
+}
+body {
+    font-family: 'Arial';
+    background-color: #2e8b57;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    overflow: hidden;
+    color: #fff;
+    margin: 0 auto;
+    text-align: center;
+}
+.dFlex {
+    display: flex;
+}
+
+.headerIcon {
+    width: 1rem;
+    height: 1rem;
+    background-color: #fff;
+    margin: 0.2rem;
+}
+.minefield {
+    width: 10rem;
+    height: 10rem;
+    background-color: darkgreen;
+}
+.statusBox {
+    width: 2rem;
+    height: 1rem;
+    margin: 0.5rem;
+    background-color: #fff;
+
+}

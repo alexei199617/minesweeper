@@ -1,69 +1,33 @@
-<head><script defer src="main.js"></script></head>Html Webpack Plugin:
-<pre>
-  Error: Child compilation failed:
-  Module not found: Error: Can't resolve 'D:\programing\2022q4\minesweeper\.src\index.html' in 'D:\programing\2022q4\min  esweeper'
-  ModuleNotFoundError: Module not found: Error: Can't resolve 'D:\programing\2022q4\minesweeper\.src\index.html' in 'D:\  programing\2022q4\minesweeper'
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\Compilation.js:2017:28
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:817:13
-      at eval (eval at create (D:\programing\2022q4\minesweeper\node_modules\tapable\lib\HookCodeFactory.js:33:10), <ano  nymous>:10:1)
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:275:22
-      at eval (eval at create (D:\programing\2022q4\minesweeper\node_modules\tapable\lib\HookCodeFactory.js:33:10), <ano  nymous>:9:1)
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:448:22
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:118:11
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:689:25
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:893:8
-      at D:\programing\2022q4\minesweeper\node_modules\webpack\lib\NormalModuleFactory.js:1013:5
-  
-  - Compilation.js:2017 
-    [minesweeper]/[webpack]/lib/Compilation.js:2017:28
-  
-  - NormalModuleFactory.js:817 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:817:13
-  
-  
-  - NormalModuleFactory.js:275 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:275:22
-  
-  
-  - NormalModuleFactory.js:448 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:448:22
-  
-  - NormalModuleFactory.js:118 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:118:11
-  
-  - NormalModuleFactory.js:689 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:689:25
-  
-  - NormalModuleFactory.js:893 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:893:8
-  
-  - NormalModuleFactory.js:1013 
-    [minesweeper]/[webpack]/lib/NormalModuleFactory.js:1013:5
-  
-  - child-compiler.js:169 
-    [minesweeper]/[html-webpack-plugin]/lib/child-compiler.js:169:18
-  
-  - Compiler.js:551 finalCallback
-    [minesweeper]/[webpack]/lib/Compiler.js:551:5
-  
-  - Compiler.js:577 
-    [minesweeper]/[webpack]/lib/Compiler.js:577:11
-  
-  - Compiler.js:1199 
-    [minesweeper]/[webpack]/lib/Compiler.js:1199:17
-  
-  
-  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
-    [minesweeper]/[tapable]/lib/Hook.js:18:14
-  
-  - Compiler.js:1195 
-    [minesweeper]/[webpack]/lib/Compiler.js:1195:33
-  
-  - Compilation.js:2790 finalCallback
-    [minesweeper]/[webpack]/lib/Compilation.js:2790:11
-  
-  - Compilation.js:3095 
-    [minesweeper]/[webpack]/lib/Compilation.js:3095:11
-  
-  
-</pre>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css"/>
+  <!-- <link href="clock.png" rel="shortcut icon"/> -->
+  <title>minesweeper</title>
+</head>
+<body>
+    <div class="header dFlex">
+        <div class="headerIcon statistic"></div>
+        <div class="headerIcon seting"></div>
+    </div>
+    <div class="minefield"></div>
+    <div class="status dFlex">
+        <div class="time">
+            <div class="">time</div>
+            <div class="statusBox"></div>
+        </div>
+        <div class="click">
+            <div class="">click</div>
+            <div class="statusBox"></div>
+        </div>
+        <div class="bomb">
+            <div class="">bomb</div>
+            <div class="statusBox"></div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
