@@ -1,36 +1,206 @@
+body, h1, h2, h3, h4, p, ul, ol[class], li, figure, figcaption, blockquote, dl, dd, html {
+    margin: 0;
+    padding: 0;
+}
 html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    overflow: hidden;
+    font-family: 'Arial';
+    transition: 1s;
     font-size: 50px;
 }
 body {
-    font-family: 'Arial';
-    background-color: #2e8b57;
-    height: 100%;
     width: 100%;
-    padding: 2rem;
-    overflow: hidden;
-    color: #fff;
-    margin: 0 auto;
+    height: 100%;
+    margin: 1rem auto;
     text-align: center;
 }
-.dFlex {
-    display: flex;
+* {
+    box-sizing: border-box;
 }
 
+.dNone {
+    display: none;
+}
+.settingBoxShadow {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #0005;
+    text-align: center;
+}
+.settingBox {
+    margin: 2rem auto;
+    width: 10rem;
+    height: 10rem;
+    background-color: #fff;
+}
+.setVars {
+    display: flex;
+    justify-content: space-around;
+}
+.setVar {
+    width: 2rem;
+    height: 2rem;
+    border: solid black;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+#themLight {
+    background-color: lightblue;
+}
+#themDark {
+    background-color: #324;
+}
+#themGreen {
+    background-color: #2e8b57;
+}
+.setVarLvl {
+    transition: 0.3s;
+    box-sizing: border-box;
+    padding: 0.3rem;
+}
+.setVarLvl:hover {
+    background-color: #ddd;
+}
+.header {
+    justify-content: center;
+    display: flex;
+}
 .headerIcon {
     width: 1rem;
     height: 1rem;
     background-color: #fff;
     margin: 0.2rem;
+    cursor: pointer;
 }
 .minefield {
+    margin: 0 auto;
+    padding: 0.1rem;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+}
+.minefield-10 {
+    width: 9.7rem;
+}
+.cell {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin: 0.03rem;
+    border-radius: 0.1rem;
+    font-size: 0.6rem;
+    font-weight: bold;
+    padding: 0.09rem;
+    transition: 0.2s;
+    cursor: crosshair;
+}
+.active {
+    cursor: default;
+}
+.status {
     width: 10rem;
-    height: 10rem;
-    background-color: darkgreen;
+    margin: 0 auto;
+    justify-content: space-around;
+    margin-top: 0.3rem;
+    font-size: 0.7rem;
+    display: flex;
+    cursor: default;
 }
 .statusBox {
     width: 2rem;
     height: 1rem;
-    margin: 0.5rem;
+    margin-top: 0;
     background-color: #fff;
-
+    border-radius: 0.2rem;
+    box-sizing: border-box;
+}
+.themDark {
+    background-color: #324;
+}
+.themDark .minefield {
+    background-color: #999;
+}
+.themDark .minefield .cell {
+    background-color: #537;
+    color: #fff;
+    box-shadow: #000 inset 0 0 0.1rem, #333 0.04rem 0.04rem 0.01rem;
+}
+.themDark .minefield .cell:hover {
+    background-color: #648;
+}
+.themDark .minefield .active {
+    background-color: purple;
+    box-shadow: #999 inset 0 0 0.2rem;
+}
+.themDark .minefield .active:hover{
+    background-color: purple;
+}
+.themDark .status {
+    color: #fff;
+}
+.themDark .status .statusBox {
+    border: solid #648;
+    color: #324;
+}
+.themLight {
+    background-color: lightblue;
+}
+.themLight .minefield {
+    background-color: #fff;
+}
+.themLight .minefield .cell {
+    background-color: #ccc;
+    color: #777;
+    box-shadow: gray inset 0 0 0.1rem, gray 0.04rem 0.04rem 0.01rem;
+}
+.themLight .minefield .cell:hover {
+    background-color: #ddd;
+}
+.themLight .minefield .active {
+    background-color: lightblue;
+    box-shadow: #fff inset 0 0 0.1rem;
+}
+.themLight .minefield .active:hover{
+    background-color: lightblue;
+}
+.themLight .status {
+    color: #777;
+}
+.themLight .status .statusBox {
+    border: solid #aaa;
+    color: #777;
+}
+.themGreen {
+    background-color: #2e8b57;
+}
+.themGreen .minefield {
+    background-color: #052;
+}
+.themGreen .minefield .cell {
+    background-color: #fff;
+    color: #fff;
+    box-shadow: #000 inset -0.02rem -0.02rem 0.1rem, #474 0.04rem 0.04rem 0.01rem;
+}
+.themGreen .minefield .cell:hover {
+    background-color: #dfd;
+}
+.themGreen .minefield .active {
+    background-color: #35a164;
+    box-shadow: #052 inset 0 0 0.2rem;
+}
+.themGreen .minefield .active:hover{
+    background-color: #35a164;
+}
+.themGreen .status {
+    color: #fff;
+}
+.themGreen .status .statusBox {
+    border: solid darkgreen;
+    color: #052;
 }
