@@ -2,7 +2,7 @@ let sizeField; // 10, 15, 25
 let theme;
 let countClick = 0;
 let countBomb;
-let sec = 00;
+let sec = 0;
 
 
 
@@ -185,18 +185,39 @@ document.getElementById('minefield').addEventListener('click', () => {
   }
 });
 
-function game(state, et) {
-  countClick++;
+function game (state, et) {
   if (state == 'start') {
-    showTime()
-    console.log('start game');
+    gameStart();
     et.classList.add('active');
+    return
   } else if (state == 'end') {
-    console.log('game over')
+    gameEnd('lose');
     return;
   } else {
+    console.log('dontStart')
     et.classList.add('active');
+    changeCountClick();
   }
+}
+
+function gameStart () {
+  showTime();
+  console.log('start game');
+  // changeCountClick();
+}
+function gameEnd (state) {
+  if (state == 'finish') {
+    console.log('finish game');
+  } else if (state == 'lose') {
+    console.log('game over');
+  } else {
+    console.log('What the state? - ' + state)
+  }
+}
+function changeCountClick () {
+    console.log('clisk')
+    countClick++;
+    document.getElementById('click').innerHTML = countClick;
 }
 
 function showTime(stat) {
