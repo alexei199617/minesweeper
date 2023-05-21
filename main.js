@@ -146,6 +146,7 @@ document.querySelector('.settingBoxShadow').addEventListener('click', () => {
   if (event.target.classList.contains('setVar') == true) {
     document.querySelector('.settingBoxShadow').classList.toggle('dNone');
     if (event.target.classList.contains('setVarLvl') == true) {
+      gameReturn();
       createCell(String(event.target.id).slice(-2));
     } else {
       changeTheme(event.target.id);
@@ -215,7 +216,6 @@ function gameStart(et) {
 
 
 function gameEnd (state) {
-  timeState = false;
   if (state == 'finish') {
     console.log('finish game');
   } else if (state == 'lose') {
@@ -223,19 +223,26 @@ function gameEnd (state) {
   } else {
     console.log('What the state? - ' + state);
   }
-  gameReturn();
+  // gameReturn();
+  setTimeout(gameReturn, 5000);
 }
 
 function gameReturn() {
+  timeState = false;
   createCell(sizeField);
   countClick = 0;
   sec = 0;
+  arrBomb = [];
   document.getElementById('time').innerHTML = ' 0:00';
   document.getElementById('click').innerHTML = countClick;
 }
 
 function changeCountClick(et) {
-  if (!et.classList.contains('active')) {
+  if (et.classList.contains('cellBomb')) {
+    et.classList.add('active');
+    console.log('log')
+    game('end');
+  } else if (!et.classList.contains('active')) {
     countClick++;
     et.classList.add('active');
     document.getElementById('click').innerHTML = countClick;
@@ -273,11 +280,57 @@ function showTime(stat) {
 function createBomb (et) {
   console.log(et.id);
   arrBomb.push(et.id);
-  // while (arrBomb.length < 10) {
-  //   getRandomInt(sizeField*sizeField+1);
-  // }
-  countBomb; //10 30 99
+  while (arrBomb.length < 11) {
+    let num = getRandomInt(sizeField*sizeField);
+    console.log(num);
+    arrBomb.forEach((item, i) => {
+      if(item == num) {
+        return
+      }
+    });
+    arrBomb.push(num);
+  }
+  arrBomb.shift();
+  arrBomb.forEach((item, i) => {
+    document.getElementById(item).classList.add('cellBomb');
+    cellNum(item, sizeField);
+  });
 }
 function getRandomInt(max) {
   return Math.ceil(Math.random() * max);
+}
+
+function cellNum (nums, sizes) {
+  let num = Number(nums);
+  let size = Number(sizes);
+  cellCloseId(num - size - 1);
+  cellCloseId(num - size);
+  cellCloseId(num - size + 1);
+  cellCloseId(num - 1);
+  cellCloseId(num + 1);
+  cellCloseId(num + size - 1);
+  cellCloseId(num + size);
+  cellCloseId(num + size + 1);
+}
+
+// cellNum(56, sizeField);
+
+function cellCloseId (num) {
+  // console.log(num);
+  if (document.getElementById(num)) {
+    if (document.getElementById(num).classList.contains('cellBomb')) {
+      return
+    } else if (document.getElementById(num).classList.contains('cellClose')) {
+      for (let i = 8; i > 0; i--) {
+        if (document.getElementById(num).classList.contains('cellClose-' + i)) {
+          document.getElementById(num).classList.remove('cellClose-' + i);
+          document.getElementById(num).classList.add('cellClose-' + (i+1));
+          return
+        }
+      }
+    } else {
+      document.getElementById(num).classList.add('cellClose');
+      document.getElementById(num).classList.add('cellClose-1');
+    }
+  }
 }
