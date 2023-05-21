@@ -3,6 +3,8 @@ let theme;
 let countClick = 0;
 let countBomb;
 let sec = 0;
+let timeState = true;
+let arrBomb = [];
 
 
 
@@ -58,6 +60,10 @@ let sec = 0;
   const header = document.createElement('div');
   header.className = 'header';
   document.body.appendChild(header);
+  const restart = document.createElement('div');
+  restart.className = 'headerIcon';
+  restart.id = 'restart';
+  header.appendChild(restart);
   const statistic = document.createElement('div');
   statistic.className = 'headerIcon';
   statistic.id = 'statistic';
@@ -129,6 +135,8 @@ if (localStorage.getItem('sizeField')) {
 }
 
 
+//resrart
+document.getElementById('restart').addEventListener('click', gameReturn);
 // Открытие окна настроек
 document.getElementById('setting').addEventListener('click', () => {
   document.querySelector('.settingBoxShadow').classList.toggle('dNone');
@@ -149,6 +157,7 @@ document.querySelector('.settingBoxShadow').addEventListener('click', () => {
 
 function createCell(size) {
   localStorage.setItem('sizeField', size);
+  sizeField = size;
   deleteCell();
   const field = document.getElementById('minefield');
   field.classList = 'minefield-' + size;
@@ -185,44 +194,61 @@ document.getElementById('minefield').addEventListener('click', () => {
   }
 });
 
-function game (state, et) {
+function game(state, et) {
   if (state == 'start') {
-    gameStart();
-    et.classList.add('active');
+    gameStart(et);
     return
   } else if (state == 'end') {
     gameEnd('lose');
     return;
   } else {
-    console.log('dontStart')
-    et.classList.add('active');
-    changeCountClick();
+    changeCountClick(et);
   }
 }
 
-function gameStart () {
+function gameStart(et) {
+  timeState = true;
+  createBomb(et);
   showTime();
   console.log('start game');
-  // changeCountClick();
 }
+
+
 function gameEnd (state) {
+  timeState = false;
   if (state == 'finish') {
     console.log('finish game');
   } else if (state == 'lose') {
     console.log('game over');
   } else {
-    console.log('What the state? - ' + state)
+    console.log('What the state? - ' + state);
   }
+  gameReturn();
 }
-function changeCountClick () {
-    console.log('clisk')
+
+function gameReturn() {
+  createCell(sizeField);
+  countClick = 0;
+  sec = 0;
+  document.getElementById('time').innerHTML = ' 0:00';
+  document.getElementById('click').innerHTML = countClick;
+}
+
+function changeCountClick(et) {
+  if (!et.classList.contains('active')) {
     countClick++;
+    et.classList.add('active');
     document.getElementById('click').innerHTML = countClick;
+  }
 }
 
 function showTime(stat) {
-  if (stat == 'end') {
-    return game('end');
+  if (timeState == false) {
+    return
+  }
+  if (stat == 'lose') {
+    game('end');
+    return;
   }
   if (sec / 60 > 99) {
     return game('end');
@@ -242,4 +268,16 @@ function showTime(stat) {
   timeStr = minute + symbol + (sec - minute * 60);
   document.getElementById('time').innerHTML = timeStr;
   setTimeout(showTime, 1000);
+}
+
+function createBomb (et) {
+  console.log(et.id);
+  arrBomb.push(et.id);
+  // while (arrBomb.length < 10) {
+  //   getRandomInt(sizeField*sizeField+1);
+  // }
+  countBomb; //10 30 99
+}
+function getRandomInt(max) {
+  return Math.ceil(Math.random() * max);
 }

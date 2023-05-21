@@ -87,9 +87,25 @@ body {
 .headerIcon {
   width: 1rem;
   height: 1rem;
-  background-color: #fff;
+  /* background-color: #fff; */
   margin: 0.2rem;
   cursor: pointer;
+  transition: 0.5s;
+  background-position: center;
+  background-size: contain;
+  border-radius: 30%;
+}
+.headerIcon:hover {
+  background-color: #373;
+}
+#setting {
+  background-image: url('src/set.svg');
+}
+#restart {
+  background-image: url('src/restart.svg');
+}
+#statistic {
+  background-image: url('src/list2.svg');
 }
 
 #minefield {
