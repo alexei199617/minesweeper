@@ -5,17 +5,18 @@ let countBomb;
 let sec = 0;
 let timeState = true;
 let arrBomb = [];
+let arrStatistic = [];
 
 
 
 //Очень страшное добавление элементов на страницу
 (function() {
-  const settingBoxShadow = document.createElement('div');
-  settingBoxShadow.className = 'settingBoxShadow dNone';
-  document.body.appendChild(settingBoxShadow);
+  const boxShadow = document.createElement('div');
+  boxShadow.className = 'boxShadow dNone';
+  document.body.appendChild(boxShadow);
   const settingBox = document.createElement('div');
   settingBox.className = 'settingBox';
-  settingBoxShadow.appendChild(settingBox);
+  boxShadow.appendChild(settingBox);
   const setText1 = document.createElement('div');
   setText1.className = 'setText';
   setText1.innerHTML = 'Theme:';
@@ -139,20 +140,20 @@ if (localStorage.getItem('sizeField')) {
 document.getElementById('restart').addEventListener('click', gameReturn);
 // Открытие окна настроек
 document.getElementById('setting').addEventListener('click', () => {
-  document.querySelector('.settingBoxShadow').classList.toggle('dNone');
+  document.querySelector('.boxShadow').classList.toggle('dNone');
 });
 // Смена темы и размера
-document.querySelector('.settingBoxShadow').addEventListener('click', () => {
+document.querySelector('.boxShadow').addEventListener('click', () => {
   if (event.target.classList.contains('setVar') == true) {
-    document.querySelector('.settingBoxShadow').classList.toggle('dNone');
+    document.querySelector('.boxShadow').classList.toggle('dNone');
     if (event.target.classList.contains('setVarLvl') == true) {
       gameReturn();
       createCell(String(event.target.id).slice(-2));
     } else {
       changeTheme(event.target.id);
     }
-  } else if (event.target.classList.contains('settingBoxShadow') == true) {
-    document.querySelector('.settingBoxShadow').classList.toggle('dNone');
+  } else if (event.target.classList.contains('boxShadow') == true) {
+    document.querySelector('.boxShadow').classList.toggle('dNone');
   }
 });
 
@@ -191,40 +192,54 @@ document.getElementById('minefield').addEventListener('click', () => {
       game('start', event.target);
     }
     game('play', event.target);
-    // event.target.classList.add('active');
   }
 });
+document.getElementById('minefield').addEventListener('contextmenu', () => {
+  event.preventDefault();
+  if (event.target.classList.contains('cell')) {
+    if (!event.target.classList.contains('active')) {
+      event.target.classList.toggle('cellRightClick');
+    }
+  }
+})
 
-function game(state, et) {
+
+function game (state, et) {
   if (state == 'start') {
     gameStart(et);
     return
   } else if (state == 'end') {
     gameEnd('lose');
     return;
+  } else if (state == 'finish') {
+    gameEnd('finish');
   } else {
     changeCountClick(et);
   }
 }
 
-function gameStart(et) {
+function gameStart (et) {
   timeState = true;
   createBomb(et);
   showTime();
   console.log('start game');
 }
 
-
 function gameEnd (state) {
   if (state == 'finish') {
     console.log('finish game');
+    gameEndStatistic();
   } else if (state == 'lose') {
     console.log('game over');
-  } else {
-    console.log('What the state? - ' + state);
+    gameEndStatistic();
   }
-  // gameReturn();
+  document.querySelectorAll('.cellBomb').forEach(item => {
+    item.classList.add('active');
+  });
   setTimeout(gameReturn, 5000);
+}
+function gameEndStatistic () {
+  let click = document.getElementById('click').value
 }
 
 function gameReturn() {
@@ -240,12 +255,18 @@ function gameReturn() {
 function changeCountClick(et) {
   if (et.classList.contains('cellBomb')) {
     et.classList.add('active');
-    console.log('log')
     game('end');
   } else if (!et.classList.contains('active')) {
     countClick++;
     et.classList.add('active');
     document.getElementById('click').innerHTML = countClick;
+    if (et.classList.contains('cellRightClick')) {
+      et.classList.remove('cellRightClick');
+    }
+    cellClearMore(et);
+    if (document.querySelectorAll('.active').length == (sizeField*sizeField-countBomb)) {
+      return game('finish');
+    }
   }
 }
 
@@ -278,59 +299,90 @@ function showTime(stat) {
 }
 
 function createBomb (et) {
-  console.log(et.id);
-  arrBomb.push(et.id);
-  while (arrBomb.length < 11) {
+  while (arrBomb.length < (countBomb)) {
     let num = getRandomInt(sizeField*sizeField);
-    console.log(num);
     arrBomb.forEach((item, i) => {
-      if(item == num) {
+      if(et.id == num) {
         return
       }
     });
     arrBomb.push(num);
   }
-  arrBomb.shift();
-  arrBomb.forEach((item, i) => {
+  arrBomb.forEach(item => {
     document.getElementById(item).classList.add('cellBomb');
-    cellNum(item, sizeField);
+    cellCloseId(cellNum(item, sizeField));
   });
+  if (document.querySelectorAll('.cellBomb').length < countBomb) {
+    generateLastBomb()
+  }
 }
+function generateLastBomb () {
+  let smallNum = getRandomInt(sizeField*sizeField);
+  if (document.getElementById(smallNum).classList.contains('cellBomb')) {
+    return generateLastBomb();
+  } else {
+    document.getElementById(smallNum).classList.add('cellBomb');
+    cellCloseId(cellNum(smallNum, sizeField));
+  }
+  if (document.querySelectorAll('.cellBomb').length < countBomb) {
+    generateLastBomb()
+  }
+}
+
 function getRandomInt(max) {
   return Math.ceil(Math.random() * max);
 }
-
 function cellNum (nums, sizes) {
   let num = Number(nums);
   let size = Number(sizes);
-  cellCloseId(num - size - 1);
-  cellCloseId(num - size);
-  cellCloseId(num - size + 1);
-  cellCloseId(num - 1);
-  cellCloseId(num + 1);
-  cellCloseId(num + size - 1);
-  cellCloseId(num + size);
-  cellCloseId(num + size + 1);
+  let smollArr = [];
+  smollArr.push(num - size - 1);
+  smollArr.push(num - size);
+  smollArr.push(num - size + 1);
+  smollArr.push(num - 1);
+  smollArr.push(num + 1);
+  smollArr.push(num + size - 1);
+  smollArr.push(num + size);
+  smollArr.push(num + size + 1);
+  return smollArr;
 }
 
-// cellNum(56, sizeField);
 
-function cellCloseId (num) {
-  // console.log(num);
-  if (document.getElementById(num)) {
-    if (document.getElementById(num).classList.contains('cellBomb')) {
-      return
-    } else if (document.getElementById(num).classList.contains('cellClose')) {
-      for (let i = 8; i > 0; i--) {
-        if (document.getElementById(num).classList.contains('cellClose-' + i)) {
-          document.getElementById(num).classList.remove('cellClose-' + i);
-          document.getElementById(num).classList.add('cellClose-' + (i+1));
-          return
+function cellCloseId (arr) {
+  arr.forEach(num => {
+    if (document.getElementById(num)) {
+      if (document.getElementById(num).classList.contains('cellBomb')) {
+        return
+      } else if (document.getElementById(num).classList.contains('cellClose')) {
+        for (let i = 8; i > 0; i--) {
+          if (document.getElementById(num).classList.contains('cellClose-' + i)) {
+            document.getElementById(num).classList.remove('cellClose-' + i);
+            document.getElementById(num).classList.add('cellClose-' + (i+1));
+            return
+          }
         }
+      } else {
+        document.getElementById(num).classList.add('cellClose');
+        document.getElementById(num).classList.add('cellClose-1');
       }
-    } else {
-      document.getElementById(num).classList.add('cellClose');
-      document.getElementById(num).classList.add('cellClose-1');
     }
+  });
+}
+
+function cellClearMore (et) {
+  if (!et.classList.contains('cellClose')) {
+    cellClearActive(et)
   }
+}
+function cellClearActive (et) {
+  cellNum(et.id, sizeField).forEach(num => {
+    if (document.getElementById(num)) {
+      if (document.getElementById(num).classList.contains('cellBomb')) {
+        return
+      } else if (!document.getElementById(num).classList.contains('cellClose')) {
+        document.getElementById(num).classList.add('active')
+      }
+    }
+  });
+
 }

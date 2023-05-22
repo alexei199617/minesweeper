@@ -26,7 +26,7 @@ body {
   display: none;
 }
 
-.settingBoxShadow {
+.boxShadow {
   top: 0;
   position: fixed;
   width: 100%;
@@ -148,6 +148,7 @@ body {
   cursor: crosshair;
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 .active {
   cursor: default;
@@ -285,10 +286,21 @@ body {
   color: #052;
 }
 
-.cellBomb.active {
-/* .cellBomb { */
+/* .cellBomb.active { */
+.cellBomb {
   background-color: #f88 !important;
-  background-image: url('src/bomb.svg');;
+  background-image: url('src/bomb.svg');
+}
+.cellRightClick {
+  background-size: 0.6rem !important;
+  background-color: #ddd !important;
+  background-image: url('src/flag.svg');
+}
+.minefield-25 .cellRightClick {
+  background-size: 0.4rem !important;
+}
+.minefield-25 .cell {
+  font-size: 0.3rem;
 }
 .active.cellClose-1:after {
   content: '1';
@@ -313,4 +325,19 @@ body {
 }
 .active.cellClose-8:after {
   content: '8';
+}
+@media screen and (max-width: 800px) {
+  html {
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 450px) {
+  html {
+    font-size: 20px;
+  }
 }
