@@ -238,7 +238,6 @@ function gameEnd (state) {
   document.querySelectorAll('.cellBomb').forEach(item => {
     item.classList.add('active');
   });
-  // setTimeout(gameReturn, 5000);
   gameReturn();
 }
 function gameEndStatistic () {
