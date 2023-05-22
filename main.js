@@ -228,15 +228,18 @@ function gameStart (et) {
 function gameEnd (state) {
   if (state == 'finish') {
     console.log('finish game');
+    alert('Hooray! You found all mines in ' + sec + ' seconds and ' + countClick + ' moves!');
     gameEndStatistic();
   } else if (state == 'lose') {
     console.log('game over');
+    alert('Game over. Try again');
     gameEndStatistic();
   }
   document.querySelectorAll('.cellBomb').forEach(item => {
     item.classList.add('active');
   });
-  setTimeout(gameReturn, 5000);
+  // setTimeout(gameReturn, 5000);
+  gameReturn();
 }
 function gameEndStatistic () {
   let click = document.getElementById('click').value
@@ -254,15 +257,16 @@ function gameReturn() {
 
 function changeCountClick(et) {
   if (et.classList.contains('cellBomb')) {
-    et.classList.add('active');
-    game('end');
-  } else if (!et.classList.contains('active')) {
-    countClick++;
-    et.classList.add('active');
-    document.getElementById('click').innerHTML = countClick;
-    if (et.classList.contains('cellRightClick')) {
-      et.classList.remove('cellRightClick');
+    if (!et.classList.contains('cellRightClick')) {
+      et.classList.add('active');
+      game('end');
     }
+  } else if (!et.classList.contains('active')) {
+    if (!et.classList.contains('cellRightClick')) {
+      et.classList.add('active');
+      countClick++;
+    }
+    document.getElementById('click').innerHTML = countClick;
     cellClearMore(et);
     if (document.querySelectorAll('.active').length == (sizeField*sizeField-countBomb)) {
       return game('finish');
@@ -368,13 +372,17 @@ function cellCloseId (arr) {
 
 function cellClearMore (et) {
   if (!et.classList.contains('cellClose')) {
-    cellClearActive(et)
+    if (!et.classList.contains('cellRightClick')) {
+      cellClearActive(et)
+    }
   }
 }
 function cellClearActive (et) {
   cellNum(et.id, sizeField).forEach(num => {
     if (document.getElementById(num)) {
       if (document.getElementById(num).classList.contains('cellBomb')) {
+        return
+      } else if (document.getElementById(num).classList.contains('cellRightClick')) {
         return
       } else if (!document.getElementById(num).classList.contains('cellClose')) {
         document.getElementById(num).classList.add('active')

@@ -286,8 +286,8 @@ body {
   color: #052;
 }
 
-/* .cellBomb.active { */
-.cellBomb {
+.cellBomb.active {
+/* .cellBomb { */
   background-color: #f88 !important;
   background-image: url('src/bomb.svg');
 }
@@ -304,18 +304,28 @@ body {
 }
 .active.cellClose-1:after {
   content: '1';
+  color: #66f;
+  text-shadow: #000 0.05rem 0 0.05rem;
 }
 .active.cellClose-2:after {
   content: '2';
+  color: green;
+  text-shadow: #000 0.05rem 0 0.05rem;
 }
 .active.cellClose-3:after {
   content: '3';
+  color: red;
+  text-shadow: #000 0.05rem 0 0.05rem;
 }
 .active.cellClose-4:after {
   content: '4';
+  color: brown;
+  text-shadow: #000 0.05rem 0 0.05rem;
 }
 .active.cellClose-5:after {
   content: '5';
+  color: black;
+  text-shadow: #fff 0 0 0.1rem;
 }
 .active.cellClose-6:after {
   content: '6';
