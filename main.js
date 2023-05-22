@@ -301,12 +301,9 @@ function showTime(stat) {
 function createBomb (et) {
   while (arrBomb.length < (countBomb)) {
     let num = getRandomInt(sizeField*sizeField);
-    arrBomb.forEach((item, i) => {
-      if(et.id == num) {
-        return
-      }
-    });
-    arrBomb.push(num);
+    if (num != et.id) {
+      arrBomb.push(num);
+    }
   }
   arrBomb.forEach(item => {
     document.getElementById(item).classList.add('cellBomb');

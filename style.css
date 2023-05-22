@@ -326,6 +326,9 @@ body {
 .active.cellClose-8:after {
   content: '8';
 }
+.active.cellBomb:after {
+  content: '';
+}
 @media screen and (max-width: 800px) {
   html {
     font-size: 40px;
