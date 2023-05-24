@@ -269,8 +269,8 @@ function gameEnd (state) {
   document.querySelectorAll('.cellBomb').forEach(item => {
     item.classList.add('active');
   });
-  setTimeout(alertTimeoutText, 500);
-  setTimeout(gameReturn, 1000);
+  setTimeout(alertTimeoutText, 200);
+  setTimeout(gameReturn, 300);
 }
 function alertTimeoutText () {
   alert(alertText);
@@ -351,19 +351,21 @@ function createBomb (et) {
     }
   });
   if (document.querySelectorAll('.cellBomb').length < countBomb) {
-    generateLastBomb()
+    generateLastBomb(et.id)
   }
 }
-function generateLastBomb () {
+function generateLastBomb (num) {
   let smallNum = getRandomInt(sizeField*sizeField);
-  if (document.getElementById(smallNum).classList.contains('cellBomb')) {
-    return generateLastBomb();
-  } else {
-    document.getElementById(smallNum).classList.add('cellBomb');
-    cellCloseId(cellNum(smallNum, sizeField));
+  if (smallNum != num) {
+    if (document.getElementById(smallNum).classList.contains('cellBomb')) {
+      return generateLastBomb(num);
+    } else {
+      document.getElementById(smallNum).classList.add('cellBomb');
+      cellCloseId(cellNum(smallNum, sizeField));
+    }
   }
   if (document.querySelectorAll('.cellBomb').length < countBomb) {
-    generateLastBomb()
+    generateLastBomb(num)
   }
 }
 

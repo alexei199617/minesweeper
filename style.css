@@ -286,8 +286,8 @@ body {
   color: #052;
 }
 
-/* .cellBomb.active { */
-.cellBomb {
+.cellBomb.active {
+/* .cellBomb { */
   background-color: #f88 !important;
   background-image: url('src/bomb.svg');
 }
