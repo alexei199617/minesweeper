@@ -1,7 +1,7 @@
 let sizeField; // 10, 15, 25
 let theme;
 let countClick = 0;
-let countBomb;
+let countBomb = 10;
 let sec = 0;
 let timeState = true;
 let arrBomb = [];
@@ -169,13 +169,13 @@ function createCell(size) {
     cell.id = i;
     field.appendChild(cell);
   }
-  if (size == 10) {
-    countBomb = 10;
-  } else if (size == 15) {
-    countBomb = 30;
-  } else if (size == 25) {
-    countBomb = 99;
-  }
+  // if (size == 10) {
+  //   countBomb = 10;
+  // } else if (size == 15) {
+  //   countBomb = 30;
+  // } else if (size == 25) {
+  //   countBomb = 99;
+  // }
   document.getElementById('bomb').innerHTML = countBomb;
   return ('size ' + size);
 }
@@ -309,8 +309,10 @@ function createBomb (et) {
     }
   }
   arrBomb.forEach(item => {
-    document.getElementById(item).classList.add('cellBomb');
-    cellCloseId(cellNum(item, sizeField));
+    if (!document.getElementById(item).classList.contains('cellBomb')) {
+      document.getElementById(item).classList.add('cellBomb');
+      cellCloseId(cellNum(item, sizeField));
+    }
   });
   if (document.querySelectorAll('.cellBomb').length < countBomb) {
     generateLastBomb()
