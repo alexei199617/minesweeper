@@ -6,6 +6,7 @@ let sec = 0;
 let timeState = true;
 let arrBomb = [];
 let arrStatistic = [];
+let alertText;
 
 
 
@@ -58,6 +59,26 @@ let arrStatistic = [];
   lvl25.id = 'lvl-25';
   lvl25.innerHTML = '25';
   setVars2.appendChild(lvl25);
+  const numMine = document.createElement('div');
+  numMine.innerHTML = 'Number of mines:';
+  settingBox.appendChild(numMine);
+  const setBombBox = document.createElement('div');
+  setBombBox.className = 'setBombBox';
+  settingBox.appendChild(setBombBox);
+  const inputBomb = document.createElement('input');
+  inputBomb.className = 'inputBomb';
+  inputBomb.type = 'number';
+  inputBomb.min = 10;
+  inputBomb.max = 99;
+  inputBomb.placeholder = 10;
+  inputBomb.value = 10;
+  inputBomb.maxlength = '2';
+  inputBomb.minlength = '2';
+  setBombBox.appendChild(inputBomb);
+  const btnSetBomb = document.createElement('div');
+  btnSetBomb.id = 'btnSetBomb';
+  btnSetBomb.innerHTML = 'change';
+  setBombBox.appendChild(btnSetBomb);
   const header = document.createElement('div');
   header.className = 'header';
   document.body.appendChild(header);
@@ -156,7 +177,22 @@ document.querySelector('.boxShadow').addEventListener('click', () => {
     document.querySelector('.boxShadow').classList.toggle('dNone');
   }
 });
+// Изменение количества бомб
+document.getElementById('btnSetBomb').addEventListener('click', () => {
+  let i = document.querySelector('.inputBomb').value;
+  if (i < 10) {
+    countBomb = 10;
+  } else if (i > 99) {
+    countBomb = 99;
+  } else {
+    countBomb = i;
+  }
+  document.querySelector('.inputBomb').value = countBomb;
+  document.querySelector('.boxShadow').classList.toggle('dNone');
+  gameReturn();
+});
 
+// создание ячеек
 function createCell(size) {
   localStorage.setItem('sizeField', size);
   sizeField = size;
@@ -169,13 +205,6 @@ function createCell(size) {
     cell.id = i;
     field.appendChild(cell);
   }
-  // if (size == 10) {
-  //   countBomb = 10;
-  // } else if (size == 15) {
-  //   countBomb = 30;
-  // } else if (size == 25) {
-  //   countBomb = 99;
-  // }
   document.getElementById('bomb').innerHTML = countBomb;
   return ('size ' + size);
 }
@@ -228,18 +257,25 @@ function gameStart (et) {
 function gameEnd (state) {
   if (state == 'finish') {
     console.log('finish game');
-    alert('Hooray! You found all mines in ' + sec + ' seconds and ' + countClick + ' moves!');
+    alertText = 'Hooray! You found all mines in ' + sec + ' seconds and ' + countClick + ' moves!';
     gameEndStatistic();
   } else if (state == 'lose') {
     console.log('game over');
-    alert('Game over. Try again');
+    // let al = alert('Game over. Try again');
+    // setTimeout(() => alert('Game over. Try again'), 10000);
+    alertText = 'Game over. Try again';
     gameEndStatistic();
   }
   document.querySelectorAll('.cellBomb').forEach(item => {
     item.classList.add('active');
   });
-  gameReturn();
+  setTimeout(alertTimeoutText, 500);
+  setTimeout(gameReturn, 1000);
 }
+function alertTimeoutText () {
+  alert(alertText);
+}
+
 function gameEndStatistic () {
   let click = document.getElementById('click').value
 }

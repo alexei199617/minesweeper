@@ -286,8 +286,8 @@ body {
   color: #052;
 }
 
-.cellBomb.active {
-/* .cellBomb { */
+/* .cellBomb.active { */
+.cellBomb {
   background-color: #f88 !important;
   background-image: url('src/bomb.svg');
 }
@@ -339,6 +339,37 @@ body {
 .active.cellBomb:after {
   content: '';
 }
+.setBombBox {
+  display: flex;
+  text-align: center;
+  justify-content: space-around;
+}
+#btnSetBomb {
+  border-radius: 0.2rem;
+  padding: 0.1rem 0.3rem;
+  box-sizing: border-box;
+  border: 0.02rem solid #000;
+  background-color: #ddd;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: #000 inset 0 0 0.1rem, #888 0.04rem 0.04rem 0.1rem;
+}
+#btnSetBomb:hover {
+  background-color: #666;
+  color: #fff;
+  box-shadow: #000 inset 0 0 0.15rem, #677 0.04rem 0.04rem 0.1rem;
+}
+.inputBomb {
+  width: 2.5rem;
+  padding: 0.1rem;
+  font-size: 1rem;
+  border-radius: 0.2rem;
+  text-align: center;
+  box-sizing: border-box;
+  border: 0.02rem solid #333;
+  box-shadow: #677 inset 0 0 0.1rem;
+}
+
 @media screen and (max-width: 800px) {
   html {
     font-size: 40px;
