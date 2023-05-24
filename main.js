@@ -2,6 +2,7 @@ let sizeField; // 10, 15, 25
 let theme;
 let countClick = 0;
 let countBomb = 10;
+let countFlag = 0;
 let sec = 0;
 let timeState = true;
 let arrBomb = [];
@@ -101,7 +102,6 @@ let alertText;
   status.className = 'status';
   document.body.appendChild(status);
   const time = document.createElement('div');
-  time.className = 'time';
   status.appendChild(time);
   const timeText = document.createElement('div');
   timeText.innerHTML = 'time';
@@ -112,7 +112,6 @@ let alertText;
   timeBox.innerHTML = '0:00';
   time.appendChild(timeBox);
   const click = document.createElement('div');
-  click.className = 'click';
   status.appendChild(click);
   const clickText = document.createElement('div');
   clickText.innerHTML = 'click';
@@ -122,6 +121,16 @@ let alertText;
   clickBox.id = 'click';
   clickBox.innerHTML = 0;
   click.appendChild(clickBox);
+  const flagClick = document.createElement('div');
+  status.appendChild(flagClick);
+  const flagText = document.createElement('div');
+  flagText.innerHTML = 'flag';
+  flagClick.appendChild(flagText);
+  const flagBox = document.createElement('div');
+  flagBox.className = 'statusBox';
+  flagBox.id = 'flagClick';
+  flagBox.innerHTML = 0;
+  flagClick.appendChild(flagBox);
   const bomb = document.createElement('div');
   bomb.className = 'bomb';
   status.appendChild(bomb);
@@ -157,7 +166,7 @@ if (localStorage.getItem('sizeField')) {
 }
 
 
-//resrart
+// button resrart
 document.getElementById('restart').addEventListener('click', gameReturn);
 // Открытие окна настроек
 document.getElementById('setting').addEventListener('click', () => {
@@ -227,11 +236,21 @@ document.getElementById('minefield').addEventListener('contextmenu', () => {
   event.preventDefault();
   if (event.target.classList.contains('cell')) {
     if (!event.target.classList.contains('active')) {
-      event.target.classList.toggle('cellRightClick');
+      if (event.target.classList.contains('cellRightClick')) {
+        event.target.classList.remove('cellRightClick');
+        countFlag--;
+      } else if (countBomb - countFlag > 0){
+        event.target.classList.add('cellRightClick');
+        countFlag++;
+      }
+      flagActive();
     }
   }
 })
-
+function flagActive () {
+  document.getElementById('bomb').innerHTML = countBomb - countFlag;
+  document.getElementById('flagClick').innerHTML = countFlag;
+}
 
 function game (state, et) {
   if (state == 'start') {
@@ -261,8 +280,6 @@ function gameEnd (state) {
     gameEndStatistic();
   } else if (state == 'lose') {
     console.log('game over');
-    // let al = alert('Game over. Try again');
-    // setTimeout(() => alert('Game over. Try again'), 10000);
     alertText = 'Game over. Try again';
     gameEndStatistic();
   }
@@ -285,9 +302,11 @@ function gameReturn() {
   createCell(sizeField);
   countClick = 0;
   sec = 0;
+  countFlag = 0;
   arrBomb = [];
   document.getElementById('time').innerHTML = ' 0:00';
   document.getElementById('click').innerHTML = countClick;
+  document.getElementById('flagClick').innerHTML = countFlag;
 }
 
 function changeCountClick(et) {

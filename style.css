@@ -291,6 +291,9 @@ body {
   background-color: #f88 !important;
   background-image: url('src/bomb.svg');
 }
+.cellBomb.active.cellRightClick {
+  background-color: #8f8 !important;
+}
 .cellRightClick {
   background-size: 0.6rem !important;
   background-color: #ddd !important;
